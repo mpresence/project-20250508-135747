@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  calculator:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+    restart: unless-stopped
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.tdd
+    volumes:
+      - .:/app
+      - ./test-results:/test-results
+    command: pytest --junitxml=/test-results/results.xml
