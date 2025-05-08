@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="calculator-container">
+    <div class="calculator">
+        <form method="POST" action="{{ url_for('main.calculate') }}">
+            <div class="calculator-display">
+                {% if result is not none %}
+                    <div class="result">{{ result }}</div>
+                {% elif error_message %}
+                    <div class="error">{{ error_message }}</div>
+                {% else %}
+                    <div class="placeholder">Enter values below</div>
+                {% endif %}
+            </div>
+            
+            <div class="calculator-inputs">
+                <div class="input-group">
+                    <label for="num1">First Number</label>
+                    <input type="text" id="num1" name="num1" value="{{ num1 if num1 is not none }}" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="operation">Operation</label>
+                    <select id="operation" name="operation" required>
+                        <option value="add" {% if operation == 'add' %}selected{% endif %}>+</option>
+                        <option value="subtract" {% if operation == 'subtract' %}selected{% endif %}>-</option>
+                        <option value="multiply" {% if operation == 'multiply' %}selected{% endif %}>×</option>
+                        <option value="divide" {% if operation == 'divide' %}selected{% endif %}>÷</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="num2">Second Number</label>
+                    <input type="text" id="num2" name="num2" value="{{ num2 if num2 is not none }}" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="calculate-btn">Calculate</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
